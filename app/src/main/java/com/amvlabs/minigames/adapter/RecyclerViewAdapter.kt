@@ -22,7 +22,7 @@ class RecyclerViewAdapter(): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder
     }
 
     override fun getItemCount(): Int {
-        return 10
+        return 1
     }
 
     override fun getItemId(position: Int): Long {
