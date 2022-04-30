@@ -19,6 +19,7 @@ import com.amvlabs.minigames.LocationHelper
 import com.amvlabs.minigames.MyLocationListener
 import com.amvlabs.minigames.R
 import com.amvlabs.minigames.database.FireDatabase
+import com.amvlabs.minigames.objects.Constant
 import java.text.SimpleDateFormat
 
 import java.util.*
@@ -45,7 +46,7 @@ class LocationService:Service() {
     override fun onCreate() {
         super.onCreate()
         db = FireDatabase()
-        db.getInstance()
+        db.getInstance(this)
 
 
         val builder:NotificationCompat.Builder = NotificationCompat.Builder(this,NOTIFICATION_CHANNEL_ID)
@@ -78,7 +79,7 @@ class LocationService:Service() {
                     date = dateAndTime[0]
                     time = dateAndTime[1]
                     data[time] = "$lat $lng"
-                    db.setData("MyLocation",date,data)
+                    db.setData(Constant.FIREBASE_COLLECTION,date,data)
                     Log.d(TAG, "onLocationChanged: ${it?.latitude}  ${it?.longitude}")
                 }
             }
