@@ -21,6 +21,7 @@ import com.amvlabs.minigames.receiver.GpsActiveListener
 import com.amvlabs.minigames.receiver.MyReceiver
 import com.amvlabs.minigames.service.LocationService
 import com.amvlabs.minigames.settings.MainSettings
+import com.amvlabs.minigames.sharepreferences.Preference
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -39,17 +40,11 @@ class MainActivity : AppCompatActivity(), GpsActiveListener {
     private var isGpsActive = false
 
 
-//    val contract = registerForActivityResult(Contract()){
-//        Log.d(TAG, "$it: ")
-//    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bind.root)
         requestPermission()
-
-
 
         receiver = MyReceiver()
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)

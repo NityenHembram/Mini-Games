@@ -15,20 +15,7 @@ class LocationHelper {
     @SuppressLint("MissingPermission")
     fun startListeningUserLocation(context: Context, listener: MyLocationListener){
         val locationManager:LocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val locationListener: LocationListener = object :LocationListener{
-            override fun onLocationChanged(location: Location) {
-                listener.onLocationChanged(location)
-            }
-
-
-            override fun onProviderEnabled(provider: String) {
-                super.onProviderEnabled(provider)
-            }
-
-            override fun onProviderDisabled(provider: String) {
-                super.onProviderDisabled(provider)
-            }
-        }
+        val locationListener: LocationListener = LocationListener { location -> listener.onLocationChanged(location) }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,Constant.LOCATION_REFRESH_TIME,Constant.LOCATION_REFRESH_DISTANCE
         ,locationListener,)
     }
