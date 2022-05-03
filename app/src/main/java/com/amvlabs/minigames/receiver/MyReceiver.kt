@@ -1,36 +1,36 @@
 package com.amvlabs.minigames.receiver
 
 import android.content.BroadcastReceiver
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.location.LocationManager
-import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
 import com.amvlabs.minigames.MainActivity
 import com.amvlabs.minigames.service.LocationService
 
 
+class MyReceiver : BroadcastReceiver() {
 
-class MyReceiver:BroadcastReceiver() {
-    private lateinit var manager:LocationManager
-    private var enabled = false
+
     override fun onReceive(context: Context?, p1: Intent?) {
-         manager = context?.getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
-         enabled = manager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        val intent = Intent(context, LocationService::class.java)
-        context.startForegroundService(intent)
 
-        setGpsListener(MainActivity() as GpsActiveListener)
+        val intent = Intent(context, LocationService::class.java)
+        context?.startForegroundService(intent)
+
+        setGpsListener(MainActivity() as GpsActiveListener,context!!)
     }
 
-    private fun setGpsListener(listener: GpsActiveListener){
-            listener.onGpsActive(enabled)
+    private fun setGpsListener(listener: GpsActiveListener,context: Context) {
+        listener.onGpsActive(isGpsEnable(context))
+    }
+
+     fun isGpsEnable(context: Context): Boolean {
+        val manager: LocationManager = context.getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
+        return manager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 }
 
-interface GpsActiveListener{
-    fun onGpsActive(isActive:Boolean)
+interface GpsActiveListener {
+    fun onGpsActive(isActive: Boolean)
 }
